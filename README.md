@@ -43,5 +43,14 @@ INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('4
 INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings ) VALUES ('5', '2021-11-11', '37.0', '欠席', '咳', '病院にいきます','&#x1f616;' );
 ```
 
-herokuのアプリにPostgreSQLを導入し接続してみる
+herokuのアプリにPostgreSQLを導入し接続してみる<br>
 https://creepfablic.site/2019/05/14/heroku-postgresql/#index_id0
+
+
+Next.js + Express + TypeScript + PostgreSQL の WEBアプリをさくっと立ち上げてプロトタイプ開発をしよう
+https://www.forcia.com/blog/001559.html
+
+Node.jsとPostgreSQLでシンプルなアプリケーションを作成（1）準備編
+https://qiita.com/tami/items/267cf5a32ce0547eaa46
+
+
