@@ -3,14 +3,13 @@
 
 ```
 CREATE TABLE users (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id serial PRIMARY KEY,
   last_name TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name_kana TEXT,
   first_name_kana TEXT,
   email TEXT NOT NULL,
-  class TEXT NOT NULL,
-  normal_temperature NUMERIC NOT NULL,
+  normal_temperature NUMERIC NOT NULL
 );
 ```
 
