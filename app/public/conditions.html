@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>健康観察表</title>
+    <!-- Load scripts -->
+    <script src="js/search.js" defer></script>
+    <script src="js/users.js" defer></script>
+    <script src="js/index.js" defer></script>
+  </head>
+
+  <body>
+      <main>
+        <h1>コンディション</h1>
+        <div id ="name"></div>
+        <section>
+
+
+         <!-- 日付入力 -->
+          <!-- 日付入力 -->
+          <input type="date" id="date" class="day">
+        </label>
+
+         <!-- 体温 -->
+         <label for ="temperature">体温
+          <select class ="temperature" id="temperature" name = "temperature">
+ 
+           <!-- 体温 -->
+         
+           <option value="35.5">35.5</option>
+           <option value="35.6">35.6</option>
+           <option value="35.7">35.7</option>
+           <option value="35.8">35.8</option>
+           <option value="35.9">35.9</option>
+           <option value="36.0">36.0</option>
+           <option value="36.1">36.1</option>
+           <option value="36.2">36.2</option>
+           <option value="36.3">36.3</option>
+           <option value="36.4">36.4</option>
+           <option value="36.5">36.5</option>
+           <option value="36.6">36.6</option>
+           <option value="36.7">36.7</option>
+           <option value="36.8">36.8</option>
+           <option value="36.9">36.9</option>
+           <option value="37.0">37.0</option>
+       
+           </select>
+           ℃</label>
+        
+        <!-- 出欠 -->
+        <label for ="attendance">出欠</label>
+          <p>
+          <input type="radio" name="attendance" id="attendance" value="出席" checked="checked">出席
+          <input type="radio" name="attendance" id="attendance" value="欠席">欠席
+          <input type="radio" name="attendance" id="attendance" value="早退">早退
+          <input type="radio" name="attendance" id="attendance" value="遅刻">遅刻
+          </p>
+
+
+
+        <!-- 理由 -->
+        <label for ="reason">理由</label>
+          <p>
+          <input type="checkbox" name="reason" id="reason" value="熱">熱
+          <input type="checkbox" name="reason" id="reason" value="咳">咳
+          <input type="checkbox" name="reason" id="reason" value="だるい">だるい
+          <input type="checkbox" name="reason" id="reason" value="息苦しい">息苦しい
+          <input type="checkbox" name="reason" id="reason" value="嘔吐">嘔吐
+          <input type="checkbox" name="reason" id="reason" value="頭痛">頭痛
+          <input type="checkbox" name="reason" id="reason" value="私用">私用
+          <input type="checkbox" name="reason" id="reason" value="その他">その他
+          </p>
+        
+        <!-- その他の理由 -->
+        <label for = "other_reason">その他の理由・連絡事項</label>
+        <textarea id="other_reason" rows="10" cols="30"></textarea>
+
+
+
+
+        <!-- フィーリング -->
+        <label for ="feelings">フィーリング</label>
+        <p>
+        <input type="radio" name="feeling" id="feelings" value="&#x1f603;" checked="checked">&#x1f603;
+        <input type="radio" name="feeling" id="feelings" value="&#x1f610;">&#x1f610;
+        <input type="radio" name="feeling" id="feelings" value="&#x1f616;">&#x1f616;
+        </p>
+                
+
+
+           <!-- 登録ボタン -->
+          <button id="save-condition-btn">登録する</button>
+
+
+        </section>
+
+
+
+
+
+          
+
+
+
+
+    </main>
+  </body>
+</html>

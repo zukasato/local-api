@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>健康観察表</title>
+    <!-- Load scripts -->
+    <script src="js/search.js" defer></script>
+    <script src="js/users.js" defer></script>
+    <script src="js/index.js" defer></script>
+  </head>
+
+  <body>
+      <main>
+        <h1>ユーザー登録</h1>
+        <section>
+          <!-- 名前 姓 -->
+          <label for = "last_name">姓</label>
+          <input type = "text" id ="last_name"/>
+
+          <!-- 名前 名 -->
+          <label for = "first_name">姓</label>
+          <input type = "text" id ="first_name"/>
+
+          <!-- 名前 セイ -->
+          <label for = "last_name_kana">セイ</label>
+          <input type = "text" id ="last_name_kana"/>
+
+          <!-- 名前 メイ -->
+          <label for = "first_name_kana">メイ</label>
+          <input type = "text" id ="first_name_kana"/>
+
+
+          <!-- クラス -->
+          <label for ="class-search">クラス</label>
+            <select class ="class-search" name = "class-search">
+
+          <!-- クラスの候補を表示 -->
+          
+            <option value="3-1">3-1</option>
+            <option value="3-2">3-2</option>
+            <option value="3-3">3-3</option>
+            <option value="3-4">3-4</option>
+            </select>
+
+          <!-- メールアドレス -->
+          <label for="email">メールアドレス</label>
+          <input type="email" id ="email"/>
+
+
+         <!-- 平熱 -->
+         <label for ="normal_temperature">平熱
+         <select class ="normal_temperature" name = "normal_temperature">
+
+          <!-- 平熱の候補を表示 -->
+        
+          <option value="35.5">35.5</option>
+          <option value="35.6">35.6</option>
+          <option value="35.7">35.7</option>
+          <option value="35.8">35.8</option>
+          <option value="35.9">35.9</option>
+          <option value="36.0">36.0</option>
+          <option value="36.1">36.1</option>
+          <option value="36.2">36.2</option>
+          <option value="36.3">36.3</option>
+          <option value="36.4">36.4</option>
+          <option value="36.5">36.5</option>
+          <option value="36.6">36.6</option>
+          <option value="36.7">36.7</option>
+          <option value="36.8">36.8</option>
+          <option value="36.9">36.9</option>
+          <option value="37.0">37.0</option>
+      
+          </select>
+          ℃</label>
+          
+
+           <!-- 新規登録ボタン -->
+          <button id="save-btn">新規登録する</button>
+
+
+        </section>
+
+
+
+
+
+          
+
+
+
+
+    </main>
+  </body>
+</html>
