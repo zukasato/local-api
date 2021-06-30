@@ -3,22 +3,23 @@
 
 ```
 CREATE TABLE users (
-  id serial PRIMARY KEY,
+  id serial,
   last_name TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name_kana TEXT,
   first_name_kana TEXT,
   email TEXT NOT NULL,
-  normal_temperature NUMERIC NOT NULL
+  normal_temperature NUMERIC NOT NULL,
+  primary key (id)
 );
 ```
 
 ```
-INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ("山田", "太郎", "yamada@gmail.com", "36.6" );
-INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ("鈴木", "春子", "suzuki@gmail.com", "36.7" );
-INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ("遠藤", "一郎", "endo@gmail.com", "36.8" );
-INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ("市川", "夏子", "ichikawa@gmail.com", "36.9" );
-INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ("大木", "次郎", "oki@gmail.com",, "36.7" );
+INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('山田', '太郎', 'yamada@gmail.com', '36.6' );
+INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('鈴木', '春子', 'suzuki@gmail.com', '36.7' );
+INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('遠藤', '一郎', 'endo@gmail.com', '36.8' );
+INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('市川', '夏子', 'ichikawa@gmail.com', '36.9' );
+INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('大木', '次郎', 'oki@gmail.com', '36.7' );
 ```
 
 ```
