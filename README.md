@@ -47,10 +47,10 @@ herokuのアプリにPostgreSQLを導入し接続してみる<br>
 https://creepfablic.site/2019/05/14/heroku-postgresql/#index_id0
 
 
-Next.js + Express + TypeScript + PostgreSQL の WEBアプリをさくっと立ち上げてプロトタイプ開発をしよう
+Next.js + Express + TypeScript + PostgreSQL の WEBアプリをさくっと立ち上げてプロトタイプ開発をしよう<br>
 https://www.forcia.com/blog/001559.html
 
-Node.jsとPostgreSQLでシンプルなアプリケーションを作成（1）準備編
+Node.jsとPostgreSQLでシンプルなアプリケーションを作成（1）準備編<br>
 https://qiita.com/tami/items/267cf5a32ce0547eaa46
 
 
