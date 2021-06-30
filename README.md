@@ -41,5 +41,4 @@ INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('2
 INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('3', '2021-11-11', '36.3', '出席','&#x1f610;' );
 INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('4', '2021-11-11', '36.2', '出席','&#x1f616;' );
 INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings ) VALUES ('5', '2021-11-11', '37.0', '欠席', '咳', '病院にいきます','&#x1f616;' );
-INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('6', '2021-11-11', '36.1', '出席','&#x1f603;' );
 ```
