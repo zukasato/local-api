@@ -53,4 +53,5 @@ https://www.forcia.com/blog/001559.html
 Node.jsとPostgreSQLでシンプルなアプリケーションを作成（1）準備編<br>
 https://qiita.com/tami/items/267cf5a32ce0547eaa46
 
-
+Express + PostgreSQL で DB 接続してみた<br>
+https://better-life.blog/posts/200
