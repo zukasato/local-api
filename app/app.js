@@ -1,10 +1,9 @@
-const express = require('express')
-const app = express()
-const sqlite3 = require('sqlite3')
+const express = require('express')//expressを利用してappへインスタンス化
+const app = express()//ルーディング処理
 const path = require('path')
 const bodyParser = require('body-parser')
+const db = require('./db/pool.js')//poolを読み込み
 
-const dbPath = "app/db/database.sqlite3"
 
 //リクエストのbodyをパースをする設定
 app.use(bodyParser.urlencoded({extended: true}))
@@ -14,16 +13,31 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 //Get all users
-app.get('/api/v2/users', (req, res) => {
+app.get('/api/v2/users' ,function (req, res, next) {
     //Conect database
-    const db = new sqlite3.Database(dbPath)
+    //const db = new sqlite3.Database(dbPath)
+    //db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id` , (err, rows) => {
+        db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id`, function(error, results){
+        // エラーの場合
+    if (error) {
+        throw error
+      }
+  
+      // 正常なら取得したデータを返却
+      res.status(200).json({
+        data: results.rows
+      });
+  
+    });
+  });
+    
+    
 
-    db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id` , (err, rows) => {
-        res.json(rows)
-    })
+        //res.json(rows)
+    //})
 
-    db.close()
-})
+    //db.close()
+//})
 
 
 
@@ -95,19 +109,19 @@ app.get('/api/v2/search-date', (req, res) => {
 
 
 
-const run = async(sql, db, res, message) =>  {
-    return new Promise((resolve, reject) => {
-        db.run(sql, (err) => {
-            if(err) {
-                res.status(500).send(err)
-                return reject()
-            } else {
-                res.json({message: message})
-                return resolve()
-            }
-        })
-    })
-}
+//const run = async(sql, db, res, message) =>  {
+    //return new Promise((resolve, reject) => {
+       // db.run(sql, (err) => {
+           // if(err) {
+               // res.status(500).send(err)
+               // return reject()
+            //} else {
+                //res.json({message: message})
+                //return resolve()
+            //}
+        //})
+    //})
+//}
 
 //Create a new user
 app.post('/api/v2/users',async(req, res) => {
