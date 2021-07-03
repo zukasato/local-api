@@ -31,9 +31,10 @@ CREATE TABLE conditions (
   reason TEXT,
   other_reason TEXT,
   feelings TEXT NOT NULL,
-  FOREIGN KEY (id) references users(id)
+  FOREIGN KEY (id) references users(id) on delete cascade
 );
 ```
+
 
 ```
 INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings ) VALUES ('1', '2021-11-11', '37.0', '欠席', '熱', '明日も休みます','&#x1f616;' );
@@ -43,7 +44,7 @@ INSERT INTO conditions (id, date, temperature, attendance, feelings ) VALUES ('4
 INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings ) VALUES ('5', '2021-11-11', '37.0', '欠席', '咳', '病院にいきます','&#x1f616;' );
 ```
 
-
+NodeアプリをHerokuで公開する<br>
 https://teech-lab.com/category/programming/node-js/
 
 herokuのアプリにPostgreSQLを導入し接続してみる<br>
@@ -58,3 +59,6 @@ https://qiita.com/tami/items/267cf5a32ce0547eaa46
 
 Express + PostgreSQL で DB 接続してみた<br>
 https://better-life.blog/posts/200
+
+PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)<br>
+https://www.dbonline.jp/postgresql/table/index11.html#section2
