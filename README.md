@@ -60,5 +60,5 @@ https://qiita.com/tami/items/267cf5a32ce0547eaa46
 Express + PostgreSQL で DB 接続してみた<br>
 https://better-life.blog/posts/200
 
-PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)
+PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)<br>
 https://www.dbonline.jp/postgresql/table/index11.html#section2
