@@ -1,17 +1,17 @@
 # local-api
 全員の情報を見る<br>
-http://localhost:8080/
+http://localhost:8080/<br>
 
 ユーザー登録ページ<br>
-http://localhost:8080/create.html
+http://localhost:8080/create.html<br>
 ユーザー編集ページ<br>
-http://localhost:8080/edit.html?uid=1
+http://localhost:8080/edit.html?uid=1<br>
 
 
 出席・体温・体調の入力ページ<br>
-http://localhost:8080/conditions.html?uid=1
+http://localhost:8080/conditions.html?uid=1<br>
 出席・体温・体調の一覧ページ<br>
-http://localhost:8080/conditions-edit.html?uid=1
+http://localhost:8080/conditions-edit.html?uid=1<br>
 
 ```
 CREATE TABLE users (
