@@ -12,142 +12,147 @@ app.use(bodyParser.json())
 //publicディレクトリを静的ファイル群のルートディレクトリとして設定
 app.use(express.static(path.join(__dirname, 'public')))
 
+
 //Get all users
 app.get('/api/v2/users' ,function (req, res, next) {
-    //Conect database
-    //const db = new sqlite3.Database(dbPath)
-    //db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id` , (err, rows) => {
-        db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id`, function(error, results){
+
+    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id`, function(error, results){
         // エラーの場合
-    if (error) {
+        if (error) {
         throw error
-      }
-  
-      // 正常なら取得したデータを返却
-      res.status(200).json({
+        }
+        // 正常なら取得したデータを返却
+        res.status(200).json({
         data: results.rows
-      });
+         });
   
     });
-  });
+});
     
     
-
-        //res.json(rows)
-    //})
-
-    //db.close()
-//})
-
-
-
 //Get a user
 app.get('/api/v2/users/:id', (req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const id = req.params.id
 
-    db.get(`SELECT * FROM users WHERE id = ${id}` , (err, row) => {
-        res.json(row)
-    })
-    
-    db.close()
-})
+    const id = req.params.id　//urlのパラメーターからidを取得
 
-//Get a user's conditions(複数)
+    db.query (`SELECT * FROM users WHERE id = ${id}`, function(error, results){
+        // エラーの場合
+        if (error) {
+        throw error
+        }
+        // 正常なら取得したデータを返却
+        res.status(200).json({
+        data: results.rows
+        });
+    });
+});
+
+
+//Get a user's conditions(複数)　特定のユーザーのcondirionを複数日抽出する
 app.get('/api/v2/users/:id/conditions', (req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
+
     const id = req.params.id
 
-    db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id};` , (err, row) => {
-        res.json(row)
-    })
-    
-    db.close()
-})
+    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id}` , function(error, results){
+        // エラーの場合
+        if (error) {
+        throw error
+        }
+        // 正常なら取得したデータを返却
+        res.status(200).json({
+        data: results.rows
+        });
+    });
+});
 
-//Get a user's condition(単数)
+
+//Get a user's condition(単数)　特定のユーザーのcondirionを１日分だけ抽出する
 app.get('/api/v2/users/:id/condition', (req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const id = req.params.id
+    
+    const id = req.params.id　//urlのパラメーターからidを取得
 
-    db.get(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id};` , (err, row) => {
-        res.json(row)
-    })
-    db.close()
-})
-
-
-
-//Search users matching keyword
-app.get('/api/v2/search', (req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const keyword = req.query.q
-
-    db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE class LIKE "${keyword}"`, (err, rows) => {
-        res.json(rows)
-    })
-    db.close()
-})
-
-//Search day matching keyword
-app.get('/api/v2/search-date', (req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const keyword = req.query.q
-
-    db.all(`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE date LIKE "${keyword}"`, (err, rows) => {
-        res.json(rows)
-    })
-    db.close()
-})
+    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id};` , function(error, results){
+    // エラーの場合
+    if (error) {
+        throw error
+        }
+        // 正常なら取得したデータを返却
+        res.status(200).json({
+        data: results.rows
+        });
+    });
+});
 
 
 
 
+//Search users matching keyword クラスで抽出する場合
+    //app.get('/api/v2/search', (req, res) => {
+    
+    //const keyword = req.query.q
 
-//const run = async(sql, db, res, message) =>  {
-    //return new Promise((resolve, reject) => {
-       // db.run(sql, (err) => {
-           // if(err) {
-               // res.status(500).send(err)
-               // return reject()
-            //} else {
-                //res.json({message: message})
-                //return resolve()
+    //db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE class LIKE '${keyword}'`,  function(error, results){
+        // エラーの場合
+        //if (error) {
+            //throw error
             //}
-        //})
-    //})
-//}
+            // 正常なら取得したデータを返却
+            //res.status(200).json({
+            //data: results.rows
+            //});
+        //});
+    //});
 
-//Create a new user
+//Search day matching keyword　日付で抽出する場合
+    app.get('/api/v2/search-date', (req, res) => {
+    
+    const keyword = req.query.q
+
+    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE date::text LIKE '${keyword}'`,  function(error, results){
+        // エラーの場合
+        if (error) {
+            throw error
+            }
+            // 正常なら取得したデータを返却
+            res.status(200).json({
+            data: results.rows
+            });
+        });
+    });
+
+
+
+
+//Create a new user　新規ユーザー追加
 app.post('/api/v2/users',async(req, res) => {
-     //Conect database
-     const db = new sqlite3.Database(dbPath)
-
+     
      const last_name = req.body.last_name
      const first_name = req.body.first_name
      const email = req. body.email
-     const schoolclass = req.body.class
      const normal_temperature = req. body .normal_temperature
 
 
-     await run(`INSERT INTO users (last_name, first_name, email, class, normal_temperature) VALUES("${last_name}", "${first_name}", "${email}", "${schoolclass}", "${normal_temperature}")`,
-     db,
-     res,
-     "登録が完了しました"
-     )
-     db.close()
-})
+     await db.query (`INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES('${last_name}', '${first_name}', '${email}', '${normal_temperature}')`,
+     function (error, results) {
+        if (error) {
+          res.status(500).json({
+            status: '500 Internal Server Error',
+            error: error,
+          })
+        }
+        // 登録できたらsuccessを返却
+        res.status(201).json({
+          status: 'success',
+        })
+      },
+    )
+  })
+  
 
-//Create a new condition
+//Create a new condition 　特定の人を抽出して日々のコンディションを新規で追加する
 app.post('/api/v2/users/:id/conditions',async(req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const id = req.params.id
+
+    const id = req.params.id　//urlのパラメーターからidを取得
 
     const date = req.body.date
     const temperature = req.body.temperature
@@ -157,66 +162,96 @@ app.post('/api/v2/users/:id/conditions',async(req, res) => {
     const feelings = req. body .feelings
 
 
-    await run(`INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings) VALUES("${id}","${date}", "${temperature}", "${attendance}", "${reason}", "${other_reason}", "${feelings}")`,
-    db,
-    res,
-    "送信しました"
+    await db.query (`INSERT INTO conditions (id, date, temperature, attendance, reason, other_reason, feelings) VALUES('${id}','${date}', '${temperature}', '${attendance}', '${reason}', '${other_reason}', '${feelings}')`,
+    function (error, results) {
+        if (error) {
+          res.status(500).json({
+            status: '500 Internal Server Error',
+            error: error,
+          })
+        }
+        // 登録できたらsuccessを返却
+        res.status(201).json({
+          status: 'success',
+        })
+      },
     )
-    db.close()
-})
+  })
 
 
 
-
-
-//Update a user data
+//Update a user data 　ユーザー情報を変更する
 app.put('/api/v2/users/:id', async(req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
-    const id = req.params.id
+    
+    const id = req.params.id //urlのパラメーターからidを取得
 
-    //現在のユーザー情報を取得する
-    db.get(`SELECT * FROM users WHERE id = ${id}` , async (err, row) => {
+        //現在のユーザー情報を取得する
+        db.query (`SELECT * FROM users WHERE id = ${id}`, async(err, row) => {
         
+        //bodyから必要な情報を取得する 参考演算子
         const last_name = req.body.last_name ? req.body.last_name : row.last_name
         const first_name = req.body.first_name ? req.body.first_name : row.first_name
         const email = req. body.email ? req.body.email : row.email
-        const schoolclass = req.body.class ? req.body.class : row.class
         const normal_temperature = req. body .normal_temperature ? req.body.normal_temperature : row.normal_temperature
-
-
-        await run(
-            `UPDATE users SET last_name="${last_name}", first_name="${first_name}", email="${email}", class="${schoolclass}", normal_temperature="${normal_temperature}" WHERE id=${id}`,
-        db,
-        res,
-        "更新しました"
-        )
-    })
-
-    db.close()
+    
+        
+        //データベースを更新する
+            await db.query (  
+                `UPDATE users SET last_name='${last_name}', first_name='${first_name}', email='${email}', normal_temperature='${normal_temperature}' WHERE id=${id}`,
+                function (error, results) {
+                    if (error) {
+                    res.status(500).json({
+                        status: '500 Internal Server Error',
+                        error: error,
+                    })
+                    }
+                    console.log(results);
+                    if (results.rowCount === 0) {
+                    // 更新するデータがなかった場合
+                    res.status(400).json({
+                        status: '400 Bad Request',
+                        message: 'データが存在しません。',
+                    })
+                    } else {
+                        // 更新できたらsuccessを返却
+                    res.status(200).json({
+                        status: 'success',
+                    })
+                    }
+                },
+            )
+        })
 })
+
 
 //Delete a user data
 app.delete('/api/v2/users/:id', async(req, res) => {
-    //Conect database
-    const db = new sqlite3.Database(dbPath)
+  
     const id = req.params.id
 
+    
 
-
-        await run(
-            `DELETE FROM users WHERE id=${id}`,
-        db,
-        res,
-        "削除しました"
-        )
-
-    db.close()
-})
-
-
-
-
+    await db.query(`DELETE FROM users WHERE id= ${id}`, function (error, results) {
+        if (error) {
+          res.status(500).json({
+            status: '500 Internal Server Error',
+            message: error,
+          })
+        }
+        if (results.rowCount === 0) {
+          // 削除するデータがなかった場合
+            res.status(400).json({
+            status: '400 Bad Request',
+            message: 'データが存在しません。',
+          })
+        } else {
+          // 削除できたらsuccessを返却
+            res.status(200).json({
+            status: 'success',
+          })
+        }
+      })
+    })
 
 
 
