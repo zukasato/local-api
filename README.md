@@ -62,3 +62,6 @@ https://better-life.blog/posts/200
 
 PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)<br>
 https://www.dbonline.jp/postgresql/table/index11.html#section2
+
+git pushがreject（拒否）されたときの対処法<br>
+https://qiita.com/Takao_/items/5e563d5ea61d2829e497
