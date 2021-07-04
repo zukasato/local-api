@@ -15,14 +15,13 @@ http://localhost:8080/conditions-edit.html?uid=1<br>
 
 ```
 CREATE TABLE users (
-  id serial,
+  id SERIAL NOT NULL primary key,
   last_name TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name_kana TEXT,
   first_name_kana TEXT,
   email TEXT NOT NULL,
-  normal_temperature NUMERIC NOT NULL,
-  primary key (id)
+  normal_temperature NUMERIC NOT NULL
 );
 ```
 
@@ -36,7 +35,7 @@ INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('å¤
 
 ```
 CREATE TABLE conditions (
-  id serial,
+  id integer,
   date DATE NOT NULL,
   temperature NUMERIC NOT NULL,
   attendance TEXT NOT NULL,
