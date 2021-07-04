@@ -1,20 +1,21 @@
 const express = require('express')//expressを利用してappへインスタンス化
 const app = express()//ルーディング処理
-const path = require('path')
+const path = require('path')//パス指定用のモジュール
 const bodyParser = require('body-parser')
 const db = require('./db/pool.js')//poolを読み込み
 
 
 //リクエストのbodyをパースをする設定
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-//publicディレクトリを静的ファイル群のルートディレクトリとして設定
+//publicディレクトリを静的ファイル群のルートディレクトリとして設定（同じサーバーでHTMLを表示する）
 app.use(express.static(path.join(__dirname, 'public')))
 
 
 //Get all users
-app.get('/api/v2/users' ,function (req, res, next) {
+app.get('/api/v2/users', (req, res) => {
+  　
 
     db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id`, function(error, results){
         // エラーの場合
@@ -50,6 +51,7 @@ app.get('/api/v2/users/:id', (req, res) => {
 
 //Get a user's conditions(複数)　特定のユーザーのcondirionを複数日抽出する
 app.get('/api/v2/users/:id/conditions', (req, res) => {
+  　
 
     const id = req.params.id
 
@@ -124,13 +126,14 @@ app.get('/api/v2/users/:id/condition', (req, res) => {
 
 
 //Create a new user　新規ユーザー追加
-app.post('/api/v2/users',async(req, res) => {
-     
+app.post('/api/v2/users', async(req, res) => {
+  
      const last_name = req.body.last_name
      const first_name = req.body.first_name
      const email = req. body.email
      const normal_temperature = req. body .normal_temperature
 
+    
 
      await db.query (`INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES('${last_name}', '${first_name}', '${email}', '${normal_temperature}')`,
      function (error, results) {
@@ -180,24 +183,33 @@ app.post('/api/v2/users/:id/conditions',async(req, res) => {
 
 
 
+  
 //Update a user data 　ユーザー情報を変更する
-app.put('/api/v2/users/:id', async(req, res) => {
+app.put('/api/v2/users/:id', function (req, res, next) {
     
-    const id = req.params.id //urlのパラメーターからidを取得
+    //const id = req.params.id //urlのパラメーターからidを取得
+    const {id} = req.params//urlのパラメーターからidを取得
+    //const {last_name, first_name, email, normal_temperature} = req.body
 
         //現在のユーザー情報を取得する
-        db.query (`SELECT * FROM users WHERE id = ${id}`, async(err, row) => {
+        db.query (`SELECT * FROM users WHERE id = '${id}'`, function (error, row) {
+         
+         
+        //bodyから必要な情報を取得する
+        const last_name = req.body.last_name? req.body.last_name : row.last_name
+        const first_name = req.body.first_name? req.body.first_name : row.first_name
+        const email = req. body.email? req.body.email : row.email
+        const normal_temperature = req. body .normal_temperature? req.body.normal_temperature : row.normal_temperature
+
         
-        //bodyから必要な情報を取得する 参考演算子
-        const last_name = req.body.last_name ? req.body.last_name : row.last_name
-        const first_name = req.body.first_name ? req.body.first_name : row.first_name
-        const email = req. body.email ? req.body.email : row.email
-        const normal_temperature = req. body .normal_temperature ? req.body.normal_temperature : row.normal_temperature
-    
-        
+        db.query(
+          'UPDATE users SET last_name = $1, first_name = $2, email = $3, normal_temperature = $4 WHERE id =$5',
+          [last_name, first_name, email, normal_temperature, id],
+  
         //データベースを更新する
-            await db.query (  
-                `UPDATE users SET last_name='${last_name}', first_name='${first_name}', email='${email}', normal_temperature='${normal_temperature}' WHERE id=${id}`,
+            //db.query (  
+                //`UPDATE users SET last_name='${last_name}', first_name='${first_name}', email='${email}', normal_temperature='${normal_temperature}' WHERE id='${id}'`,
+                
                 function (error, results) {
                     if (error) {
                     res.status(500).json({
@@ -207,21 +219,26 @@ app.put('/api/v2/users/:id', async(req, res) => {
                     }
                     console.log(results);
                     if (results.rowCount === 0) {
-                    // 更新するデータがなかった場合
+                     //更新するデータがなかった場合
                     res.status(400).json({
-                        status: '400 Bad Request',
-                        message: 'データが存在しません。',
+                       status: '400 Bad Request',
+                       message: 'データが存在しません。',
                     })
                     } else {
-                        // 更新できたらsuccessを返却
+                         //更新できたらsuccessを返却
                     res.status(200).json({
                         status: 'success',
                     })
                     }
-                },
+               },
             )
         })
 })
+
+
+
+
+
 
 
 //Delete a user data

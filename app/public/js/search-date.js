@@ -17,7 +17,7 @@ const searchModule2 =(() => {
             for (let i=0; i < result.length; i++){
                 const user = result[i]
                 body += `<tr>
-                            <td>${user.class}</td>
+                            
                             <td>${user.last_name}</td>
                             <td>${user.first_name}</td>
                             <td>${user.temperature}</td>

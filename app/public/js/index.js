@@ -17,11 +17,11 @@ const indexModule = (() => {
         document.getElementById("date").value=yyyy+'-'+mm+'-'+dd;
 
         //クラスで絞り込みをした時のイベントリスナー設定
-        const selectElement = document.querySelector('.class-search');    
-        selectElement.addEventListener('change', (event) => {      
-            return searchModule.searchUsers(), searchModule3.graphIndex()
+        //const selectElement = document.querySelector('.class-search');    
+        //selectElement.addEventListener('change', (event) => {      
+            //return searchModule.searchUsers(), searchModule3.graphIndex()
             
-        })
+        //})
         
 
 
@@ -36,6 +36,8 @@ const indexModule = (() => {
             
         //日付で絞り込みをした時（初期値＝今日）のsearchModule2メソッドを呼び出す
         return searchModule2.searchDays()
+
+        
 
      
 
@@ -76,7 +78,7 @@ const indexModule = (() => {
         })
         return usersModule.getUsersName(uid)
         
-        break;
+        
 
         default:
             break;
