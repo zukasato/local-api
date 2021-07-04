@@ -1,16 +1,27 @@
 # local-api
+全員の情報を見る（日付で絞り込み）<br>
+http://localhost:8080/<br>
 
+ユーザー登録ページ<br>
+http://localhost:8080/create.html<br>
+ユーザー編集ページ<br>
+http://localhost:8080/edit.html?uid=1<br>
+
+
+出席・体温・体調の入力ページ<br>
+http://localhost:8080/conditions.html?uid=1<br>
+出席・体温・体調の一覧ページ<br>
+http://localhost:8080/conditions-edit.html?uid=1<br>
 
 ```
 CREATE TABLE users (
-  id serial,
+  id SERIAL NOT NULL primary key,
   last_name TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name_kana TEXT,
   first_name_kana TEXT,
   email TEXT NOT NULL,
-  normal_temperature NUMERIC NOT NULL,
-  primary key (id)
+  normal_temperature NUMERIC NOT NULL
 );
 ```
 
@@ -24,7 +35,7 @@ INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('�
 
 ```
 CREATE TABLE conditions (
-  id serial,
+  id integer,
   date DATE NOT NULL,
   temperature NUMERIC NOT NULL,
   attendance TEXT NOT NULL,
@@ -62,3 +73,6 @@ https://better-life.blog/posts/200
 
 PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)<br>
 https://www.dbonline.jp/postgresql/table/index11.html#section2
+
+git pushがreject（拒否）されたときの対処法<br>
+https://qiita.com/Takao_/items/5e563d5ea61d2829e497
