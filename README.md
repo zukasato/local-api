@@ -1,4 +1,4 @@
-# local-api
+# local-api Heroku postgresバージョン
 全員の情報を見る（日付で絞り込み）<br>
 http://localhost:8080/<br>
 
@@ -72,7 +72,13 @@ Express + PostgreSQL で DB 接続してみた<br>
 https://better-life.blog/posts/200
 
 PostgreSQLの使い方 ＞ FOREIGN KEY制約(外部キー制約を設定する)<br>
-https://www.dbonline.jp/postgresql/table/index11.html#section2
+https://www.dbonline.jp/postgresql/table/index11.html#section2<br>
 
 git pushがreject（拒否）されたときの対処法<br>
-https://qiita.com/Takao_/items/5e563d5ea61d2829e497
+https://qiita.com/Takao_/items/5e563d5ea61d2829e497<br>
+
+postgresql参考<br>
+https://www.dbonline.jp/postgresql/<br>
+
+docker参考<br>
+https://youtu.be/DNnW4I43wyU
