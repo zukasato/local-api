@@ -6,6 +6,7 @@ const db = require('./db/pool.js')//poolを読み込み
 
 
 //リクエストのbodyをパースをする設定
+
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
@@ -185,34 +186,29 @@ app.post('/api/v2/users/:id/conditions',async(req, res) => {
 
   
 //Update a user data 　ユーザー情報を変更する
-app.put('/api/v2/users/:id', function (req, res, next) {
+app.put('/api/v2/users/:id', async (req, res) => {
     
-    //const id = req.params.id //urlのパラメーターからidを取得
-    const {id} = req.params//urlのパラメーターからidを取得
-    //const {last_name, first_name, email, normal_temperature} = req.body
+    //urlのパラメーターからidを取得
+    const id = req.params.id //urlのパラメーターからidを取得
 
+    
         //現在のユーザー情報を取得する
-        db.query (`SELECT * FROM users WHERE id = '${id}'`, function (error, row) {
-         
-         
-        //bodyから必要な情報を取得する
-        const last_name = req.body.last_name? req.body.last_name : row.last_name
-        const first_name = req.body.first_name? req.body.first_name : row.first_name
-        const email = req. body.email? req.body.email : row.email
-        const normal_temperature = req. body .normal_temperature? req.body.normal_temperature : row.normal_temperature
+        db.query (`SELECT * FROM users WHERE id=${id}`, async (err, row) => {
+       
 
-        
-        db.query(
-          'UPDATE users SET last_name = $1, first_name = $2, email = $3, normal_temperature = $4 WHERE id =$5',
-          [last_name, first_name, email, normal_temperature, id],
-  
-        //データベースを更新する
-            //db.query (  
-                //`UPDATE users SET last_name='${last_name}', first_name='${first_name}', email='${email}', normal_temperature='${normal_temperature}' WHERE id='${id}'`,
-                
+          const last_name = req.body.last_name ? req.body.last_name : row.last_name
+          const first_name = req.body.first_name ? req.body.first_name : row.first_name
+          const email = req.body.email ? req.body.email : row.email
+          const normal_temperature = req.body.normal_temperature ? req.body.normal_temperature : row.normal_temperature
+         
+
+           await db.query (  
+               // `UPDATE users SET last_name='${last_name}',first_name='${first_name}', email='${email}', normal_temperature ='${normal_temperature}' WHERE id=${id}`,
+                `UPDATE users SET last_name='$1',first_name='$2', email='$3', normal_temperature ='$4' WHERE id=$5`,
+                 [last_name,first_name,email,normal_temperature,id],
                 function (error, results) {
-                    if (error) {
-                    res.status(500).json({
+                   if (error) {
+                   res.status(500).json({
                         status: '500 Internal Server Error',
                         error: error,
                     })
@@ -222,19 +218,43 @@ app.put('/api/v2/users/:id', function (req, res, next) {
                      //更新するデータがなかった場合
                     res.status(400).json({
                        status: '400 Bad Request',
-                       message: 'データが存在しません。',
+                       message: 'データが存在しません',
                     })
-                    } else {
-                         //更新できたらsuccessを返却
+                   } else {
+                       //  更新できたらsuccessを返却
                     res.status(200).json({
                         status: 'success',
                     })
                     }
-               },
+               }
             )
         })
 })
 
+
+
+
+
+// Update
+//app.put('/api/v2/users/:id', (req, res) => {
+  //const id = req.body.id;
+  //const last_name = req.body.last_name;
+  //const first_name = req.body.first_name;
+ // const email = req.body.email;
+  //const normal_temperature = req.body.normal_temperature;
+
+  //const updateSql = 'UPDATE users SET last_name = $1, first_name = $2, email = $3, normal_temperature = $4 WHERE id =$5';
+  //const selectSql = 'SELECT * FROM users WHERE id = $1';
+ // db.query(updateSql, [last_name, first_name, email, normal_temperature, id], (err, result) => {
+      //if (err) throw err;
+     // console.log(result.row);
+     /// db.query(selectSql, [id], (err, result) => {
+         // if (err) throw err;
+         // console.log(result.rows[0]);
+        //  res.send(result.rows[0]);
+     // });
+  ///});
+//});
 
 
 
