@@ -1,4 +1,4 @@
-# local-api Heroku postgresバージョン
+# local-api （Heroku PostgreSQLバージョン）
 全員の情報を見る（日付で絞り込み）<br>
 http://localhost:8080/<br>
 
