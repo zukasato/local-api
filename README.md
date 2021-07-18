@@ -36,7 +36,7 @@ INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES ('å¤
 ```
 CREATE TABLE conditions (
   id integer,
-  date DATE NOT NULL,
+  date TIMESTAMP NOT NULL,
   temperature NUMERIC NOT NULL,
   attendance TEXT NOT NULL,
   reason TEXT,
