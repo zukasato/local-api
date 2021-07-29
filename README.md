@@ -1,3 +1,19 @@
+# heroku 
+全員の情報を見る（日付で絞り込み）<br>
+https://hccs.herokuapp.com/<br>
+
+ユーザー登録ページ<br>
+https://hccs.herokuapp.com/create.html<br>
+ユーザー編集ページ<br>
+https://hccs.herokuapp.com/edit.html?uid=1<br>
+出席・体温・体調の入力ページ<br>
+https://hccs.herokuapp.com/conditions.html?uid=1<br>
+出席・体温・体調の一覧ページ<br>
+https://hccs.herokuapp.com/conditions-edit.html?uid=1<br>
+
+
+
+
 # local-api （Heroku PostgreSQLバージョン）
 全員の情報を見る（日付で絞り込み）<br>
 http://localhost:8080/<br>
@@ -6,7 +22,6 @@ http://localhost:8080/<br>
 http://localhost:8080/create.html<br>
 ユーザー編集ページ<br>
 http://localhost:8080/edit.html?uid=1<br>
-
 
 出席・体温・体調の入力ページ<br>
 http://localhost:8080/conditions.html?uid=1<br>
