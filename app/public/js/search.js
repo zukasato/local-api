@@ -54,8 +54,15 @@ const searchModule =(() => {
                             <td>${user.other_reason}</td>
                             <td>${user.date}</td>
                         </tr>`
+
             }
             document.getElementById('users-table').innerHTML = body
         }
+
+       
+
+
+
+
     }
 })()

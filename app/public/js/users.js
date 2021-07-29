@@ -94,7 +94,7 @@ const usersModule = (() => {
             const res = await fetch(BASE_URL + "/" + uid,{
                 method: "PUT",
                 headers: headers,
-                body: JSON.stringify(body)
+                body: JSON.stringify(body) //オブジェクトをJSON文字列に変換（javasciriptの文字列をそのままjsonに渡せない）
             })
 
             const resJson = await res.json() 
@@ -106,27 +106,70 @@ const usersModule = (() => {
 
         
         getUsersConditions: async (uid) => {
+
+            //ユーザー名を表示
+            const singleres = await fetch(BASE_URL + "/" + uid +"/condition")
+            const singleuser = await singleres.json()
+            document.getElementById('last_name').insertAdjacentHTML('beforeend', `<div>${singleuser.last_name}&nbsp;${singleuser.first_name}さん</div>`)
+
+
+            //ユーザーの過去のコンディションデータをテーブルに表示
             const res = await fetch(BASE_URL + "/" + uid +"/conditions") 
             const users = await res.json()
 
+            
 
             for (let i=0; i < users.length; i++) {
                 const user = users[i]
                 const body = `<tr>
-                                <td>${user.date}</td>
+                                <td>${user.datenew}</td>
                                 <td>${user.temperature}</td>
                                 <td>${user.attendance}</td>
-                                <td>${user.feelings}</td>
-                              </tr>`
-                
+                               
+                              </tr>` 
             document.getElementById('conditions-table').insertAdjacentHTML('beforeend', body)
-            }
+            };
 
-            const singleres = await fetch(BASE_URL + "/" + uid +"/condition")
-            const singleuser = await singleres.json()
+            
 
-            document.getElementById('last_name').insertAdjacentHTML('beforeend', `<div>${singleuser.last_name}&nbsp;${singleuser.first_name}さん</div>`)
-  
+            //Chart.js で１体温を折れ線グラフにして表示
+            const temperatures = users.map(item => item.temperature)//users配列からmap()メソッドで体温だけの配列を作成
+            const days = users.map(item => item.datenew)//users配列からmap()メソッドで日付だけの配列を作成
+               
+            const ctx = document.getElementById("myLineChart");
+            const myLineChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: days,
+                datasets: [
+                  {
+                    label: '体温',
+                    data: temperatures,
+                    borderColor: "#7ADF92",
+                    backgroundColor: "#EFEFEF"
+                  },
+                  
+                ],
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: '体温'
+                },
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      suggestedMax: 40,
+                      suggestedMin: 0,
+                      stepSize: 10,
+                      callback: function(value, index, values){
+                        return  value +  '度'
+                      }
+                    }
+                  }]
+                },
+              }
+            }); 
             },
 
         createUserConditions: async(uid) => {
@@ -134,12 +177,28 @@ const usersModule = (() => {
 
             const date = document.getElementById("date").value
             const temperature = document.getElementById("temperature").value
-            const attendance = document.getElementById("attendance").value
             const reason = document.getElementById("reason").value
             const other_reason = document.getElementById("other_reason").value
-            const feelings = document.getElementById("feelings").value
+            
+            
+            // ラジオボタン出欠のform要素を取得
+            const element = document.getElementById("attendances");
+            // form要素内のラジオボタングループ(name="attendance")を取得
+            const radioNodeList = element.attendance;
+            // 選択状態の値(value)を取得
+            const attendance = radioNodeList.value;
 
+            // ラジオボタンfeelingsのform要素を取得
+            const elementfeelings = document.getElementById("feelings");
+            // form要素内のラジオボタングループ(name="attendance")を取得
+            const radioNodeListfeelings = elementfeelings.feeling;
+            // 選択状態の値(value)を取得
+            const feelings = radioNodeListfeelings.value;
+              
+                
+          
 
+           
             //リクエストのbody
             const body = {
               date: date,

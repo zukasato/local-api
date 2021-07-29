@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const db = require('./db/pool.js')//poolを読み込み
 
 
+
 //リクエストのbodyをパースをする設定
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -23,10 +24,8 @@ app.get('/api/v2/users', (req, res) => {
         if (error) {
         throw error
         }
-        // 正常なら取得したデータを返却
-        res.status(200).json({
-        data: results.rows
-         });
+         res.status(200).json(results.rows);
+         
   
     });
 });
@@ -40,33 +39,31 @@ app.get('/api/v2/users/:id', (req, res) => {
     db.query (`SELECT * FROM users WHERE id = ${id}`, function(error, results){
         // エラーの場合
         if (error) {
-        throw error
-        }
-        // 正常なら取得したデータを返却
-        res.status(200).json({
-        data: results.rows
-        });
+          throw error
+          }
+          res.status(200).json(results.rows[0]);
+
+      })
     });
-});
 
 
 //Get a user's conditions(複数)　特定のユーザーのcondirionを複数日抽出する
 app.get('/api/v2/users/:id/conditions', (req, res) => {
   　
-
     const id = req.params.id
-
-    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id}` , function(error, results){
-        // エラーの場合
-        if (error) {
-        throw error
+  
+   db.query (`SELECT TO_CHAR(date, 'YYYY-MM-DD') AS datenew,* FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE users.id = ${id}` , function(err,results){
+     
+  
+   // エラーの場合
+       if (err) {
+        throw err
         }
         // 正常なら取得したデータを返却
-        res.status(200).json({
-        data: results.rows
-        });
-    });
-});
+        res.status(200).json(results.rows);
+
+       });
+      });
 
 
 //Get a user's condition(単数)　特定のユーザーのcondirionを１日分だけ抽出する
@@ -80,9 +77,9 @@ app.get('/api/v2/users/:id/condition', (req, res) => {
         throw error
         }
         // 正常なら取得したデータを返却
-        res.status(200).json({
-        data: results.rows
-        });
+        res.status(200).json(results.rows[0]);
+
+       
     });
 });
 
@@ -111,15 +108,13 @@ app.get('/api/v2/users/:id/condition', (req, res) => {
     
     const keyword = req.query.q
 
-    db.query (`SELECT * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE date::text LIKE '${keyword}'`,  function(error, results){
+    db.query (`SELECT  * FROM users LEFT OUTER JOIN conditions ON users.id = conditions.id WHERE date = to_date('${keyword}', 'yyyy-mm-dd')`,  function(error, results){
         // エラーの場合
         if (error) {
             throw error
             }
             // 正常なら取得したデータを返却
-            res.status(200).json({
-            data: results.rows
-            });
+            res.status(200).json(results.rows);
         });
     });
 
@@ -131,12 +126,14 @@ app.post('/api/v2/users', async(req, res) => {
   
      const last_name = req.body.last_name
      const first_name = req.body.first_name
+     const last_name_kana = req.body.last_name_kana
+     const first_name_kana = req.body.first_name_kana
      const email = req. body.email
      const normal_temperature = req. body .normal_temperature
 
     
 
-     await db.query (`INSERT INTO users (last_name, first_name, email, normal_temperature) VALUES('${last_name}', '${first_name}', '${email}', '${normal_temperature}')`,
+     await db.query (`INSERT INTO users (last_name, first_name, last_name_kana, first_name_kana, email, normal_temperature) VALUES('${last_name}', '${first_name}', '${last_name_kana}', '${first_name_kana}', '${email}', '${normal_temperature}')`,
      function (error, results) {
         if (error) {
           res.status(500).json({
@@ -146,7 +143,7 @@ app.post('/api/v2/users', async(req, res) => {
         }
         // 登録できたらsuccessを返却
         res.status(201).json({
-          status: 'success',
+          message: '新規ユーザーを追加しました',
         })
       },
     )
@@ -174,88 +171,55 @@ app.post('/api/v2/users/:id/conditions',async(req, res) => {
             error: error,
           })
         }
+        
         // 登録できたらsuccessを返却
         res.status(201).json({
-          status: 'success',
+          message: '体調を記録しました'
+          
         })
       },
     )
   })
 
 
-
+  
   
 //Update a user data 　ユーザー情報を変更する
-app.put('/api/v2/users/:id', async (req, res) => {
+app.put('/api/v2/users/:id',  (req, res) => {
     
     //urlのパラメーターからidを取得
-    const id = req.params.id //urlのパラメーターからidを取得
+  const id = req.params.id //urlのパラメーターからidを取得
+  
 
-    
-        //現在のユーザー情報を取得する
-        db.query (`SELECT * FROM users WHERE id=${id}`, async (err, row) => {
-       
+      db.query (`SELECT * FROM users WHERE id=${id}`, async(err, responce) => {
+      
+      const row = responce.rows[0];
 
-          const last_name = req.body.last_name ? req.body.last_name : row.last_name
-          const first_name = req.body.first_name ? req.body.first_name : row.first_name
-          const email = req.body.email ? req.body.email : row.email
-          const normal_temperature = req.body.normal_temperature ? req.body.normal_temperature : row.normal_temperature
-         
+      const last_name = req.body.last_name ? req.body.last_name : row.last_name;
+      const first_name = req.body.first_name ? req.body.first_name : row.first_name;
+      const email = req.body.email ? req.body.email : row.email;
+      const normal_temperature = req.body.normal_temperature ? req.body.normal_temperature : row.normal_temperature;
 
-           await db.query (  
-               // `UPDATE users SET last_name='${last_name}',first_name='${first_name}', email='${email}', normal_temperature ='${normal_temperature}' WHERE id=${id}`,
-                `UPDATE users SET last_name='$1',first_name='$2', email='$3', normal_temperature ='$4' WHERE id=$5`,
-                 [last_name,first_name,email,normal_temperature,id],
-                function (error, results) {
-                   if (error) {
-                   res.status(500).json({
-                        status: '500 Internal Server Error',
-                        error: error,
-                    })
-                    }
-                    console.log(results);
-                    if (results.rowCount === 0) {
-                     //更新するデータがなかった場合
-                    res.status(400).json({
-                       status: '400 Bad Request',
-                       message: 'データが存在しません',
-                    })
-                   } else {
-                       //  更新できたらsuccessを返却
-                    res.status(200).json({
-                        status: 'success',
-                    })
-                    }
-               }
-            )
+      db.query (  
+        `UPDATE users SET last_name='${last_name}',first_name='${first_name}', email='${email}', normal_temperature ='${normal_temperature}' WHERE id ='${id}'`,
+
+        function (error, results) {
+          
+          if (error) {
+            
+            res.status(500).json({
+              status: '500 Internal Server Error',
+              error: error,
+            })
+          }
+          // 登録できたらsuccessを返却
+          res.status(201).json({
+            message: 'ユーザー情報を更新しました'
+          })
+
         })
-})
-
-
-
-
-
-// Update
-//app.put('/api/v2/users/:id', (req, res) => {
-  //const id = req.body.id;
-  //const last_name = req.body.last_name;
-  //const first_name = req.body.first_name;
- // const email = req.body.email;
-  //const normal_temperature = req.body.normal_temperature;
-
-  //const updateSql = 'UPDATE users SET last_name = $1, first_name = $2, email = $3, normal_temperature = $4 WHERE id =$5';
-  //const selectSql = 'SELECT * FROM users WHERE id = $1';
- // db.query(updateSql, [last_name, first_name, email, normal_temperature, id], (err, result) => {
-      //if (err) throw err;
-     // console.log(result.row);
-     /// db.query(selectSql, [id], (err, result) => {
-         // if (err) throw err;
-         // console.log(result.rows[0]);
-        //  res.send(result.rows[0]);
-     // });
-  ///});
-//});
-
+      })
+    })
 
 
 
