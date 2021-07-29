@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8”>
+    <meta name="viewport" content="width=device-width">
     <title>健康観察一覧　ユーザー画面</title>
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="style.css">
     <!-- Load scripts -->
     <script src="js/users.js" defer></script>
     <script src="js/index.js" defer></script>
     <script src="js/search.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     
     
   </head>
@@ -15,24 +20,40 @@
 
         <section>
 
-        <h1>健康観察一覧　ユーザー画面</h1>
-        <div id ="last_name"></div>
+          <header>
+            <section class="header-area">
+              <a href="http://localhost:8080/"><img class ="logo" src="\images\logo.png"></a>
+              <div id ="last_name" class="user-name"></div>
+              <img class ="user-icon" src="\images\user-icon.png">
+            <section>
+          </header>
+
+
+          <section class="conditions-edit-wrap">
+
+            <div class="conditions-edit-table">
         
-        
+         
           <table>
             <thead>
               <tr>
                 <th>日付</th>
                 <th>体温</th>
                 <th>出欠</th>
-                <th>feeling</th>
-                <th>詳細</th>
+                
+                
               </tr>
             </thead>
             <tbody id="conditions-table">
 
             </tbody>
           </table>
+          </div>
+        </section>
+        </section>
+
+        <section class="linechart">
+        <canvas id="myLineChart" height="300"></canvas>
         </section>
 
        

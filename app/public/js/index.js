@@ -43,8 +43,7 @@ const indexModule = (() => {
 
 
         case '/create.html':
-
-        document.getElementById('save-btn').addEventListener('click',()=>{
+        document.getElementById('save-newuser-btn').addEventListener('click',()=>{
             return usersModule.createUser()
         })
 

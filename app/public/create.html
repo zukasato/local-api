@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8”>
+    <meta name="viewport" content="width=device-width">
     <title>健康観察表</title>
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="style.css">
     <!-- Load scripts -->
     <script src="js/search.js" defer></script>
     <script src="js/users.js" defer></script>
@@ -10,83 +14,101 @@
 
   <body>
       <main>
-        <h1>ユーザー登録</h1>
-        <section>
-          <!-- 名前 姓 -->
-          <label for = "last_name">姓</label>
-          <input type = "text" id ="last_name"/>
 
-          <!-- 名前 名 -->
-          <label for = "first_name">姓</label>
-          <input type = "text" id ="first_name"/>
+       
 
-          <!-- 名前 セイ -->
-          <label for = "last_name_kana">セイ</label>
-          <input type = "text" id ="last_name_kana"/>
+          <header>
+            <section class="header-area">
+              <a href="http://localhost:8080/"><img class ="logo" src="\images\logo.png"></a>
+            <section>
+            </header>
 
-          <!-- 名前 メイ -->
-          <label for = "first_name_kana">メイ</label>
-          <input type = "text" id ="first_name_kana"/>
+          <section class="form-wrap">
+            <section class="form-inner">
+
+              <div class="name-flex">
+                <!-- 名前 姓 -->
+                <div class="name-flex-child">
+                <label for = "last_name" class="tittle-label">姓</label>
+                <input type = "text" id ="last_name" class="form-parts name"/>
+                </div>
+
+                
+                <!-- 名前 名 -->
+                <div class="name-flex-child">
+                <label for = "first_name" class="tittle-label">名</label>
+                <input type = "text" id ="first_name" class="form-parts name"/>
+                </div>
+                </div>
+
+                <div class="name-flex">
+
+                <!-- 名前 セイ -->
+                <div class="name-flex-child">
+                <label for = "last_name_kana" class="tittle-label">セイ</label>
+                <input type = "text" id ="last_name_kana" class="form-parts name"/>
+                </div>
+
+                <!-- 名前 メイ -->
+                <div class="name-flex-child">
+                <label for = "first_name_kana" class="tittle-label">メイ</label>
+                <input type = "text" id ="first_name_kana" class="form-parts name"/>
+                </div>
+              </div>
 
 
-          <!-- クラス -->
-          <label for ="class-search">クラス</label>
-            <select class ="class-search" name = "class-search">
+              <!-- クラス
+              <label for ="class-search">クラス</label>
+                <select class ="class-search" name = "class-search">
 
-          <!-- クラスの候補を表示 -->
+              -->
+
+              <!-- クラスの候補を表示
+              
+                <option value="3-1">3-1</option>
+                <option value="3-2">3-2</option>
+                <option value="3-3">3-3</option>
+                <option value="3-4">3-4</option>
+                </select> -->
+
+              <!-- メールアドレス -->
+              <label for="email" class="tittle-label">メールアドレス</label>
+              <input type="email" id ="email" class="form-parts"/>
+
+
+              <!-- 平熱 -->
+              <label for ="normal_temperature" class="tittle-label">平熱</label>
+              <select class ="normal_temperature temperature" name ="normal_temperature">
+
+              <!-- 平熱の候補を表示 -->
+            
+              <option value="35.5">35.5</option>
+              <option value="35.6">35.6</option>
+              <option value="35.7">35.7</option>
+              <option value="35.8">35.8</option>
+              <option value="35.9">35.9</option>
+              <option value="36.0">36.0</option>
+              <option value="36.1">36.1</option>
+              <option value="36.2">36.2</option>
+              <option value="36.3">36.3</option>
+              <option value="36.4">36.4</option>
+              <option value="36.5">36.5</option>
+              <option value="36.6">36.6</option>
+              <option value="36.7">36.7</option>
+              <option value="36.8">36.8</option>
+              <option value="36.9">36.9</option>
+              <option value="37.0">37.0</option>
           
-            <option value="3-1">3-1</option>
-            <option value="3-2">3-2</option>
-            <option value="3-3">3-3</option>
-            <option value="3-4">3-4</option>
-            </select>
-
-          <!-- メールアドレス -->
-          <label for="email">メールアドレス</label>
-          <input type="email" id ="email"/>
-
-
-         <!-- 平熱 -->
-         <label for ="normal_temperature">平熱
-         <select class ="normal_temperature" name = "normal_temperature">
-
-          <!-- 平熱の候補を表示 -->
-        
-          <option value="35.5">35.5</option>
-          <option value="35.6">35.6</option>
-          <option value="35.7">35.7</option>
-          <option value="35.8">35.8</option>
-          <option value="35.9">35.9</option>
-          <option value="36.0">36.0</option>
-          <option value="36.1">36.1</option>
-          <option value="36.2">36.2</option>
-          <option value="36.3">36.3</option>
-          <option value="36.4">36.4</option>
-          <option value="36.5">36.5</option>
-          <option value="36.6">36.6</option>
-          <option value="36.7">36.7</option>
-          <option value="36.8">36.8</option>
-          <option value="36.9">36.9</option>
-          <option value="37.0">37.0</option>
-      
-          </select>
-          ℃</label>
+              </select>
           
+              
 
-           <!-- 新規登録ボタン -->
-          <button id="save-btn">新規登録する</button>
-
-
-        </section>
+              <!-- 新規登録ボタン -->
+              <button id="save-newuser-btn" class="save-btn create-btn">新規登録</button>
 
 
-
-
-
-          
-
-
-
+            </section>
+          </section>
 
     </main>
   </body>

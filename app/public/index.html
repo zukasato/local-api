@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8”>
+    <meta name="viewport" content="width=device-width">
     <title>健康観察表</title>
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="style.css">
     <!-- Load scripts -->
-    
-    
     <script src="js/search-date.js" defer></script>
     <script src="js/users.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
   </head>
 
   <body>
       <main>
-        <h1>健康観察表</h1>
-        <section>
+        
+        <section class="index-wrap">
+        <section class="index-flex">
+        <div class="index-left-block">
+        
           <!-- クラス 
           <label for ="class-search">クラス</label>
             <select class ="class-search" name = "class-search"　size="6">
@@ -31,14 +37,16 @@
           
 
           <!-- 日付入力 -->
-          <input type="date" id="date" class="day">
-          
+          <a href="http://localhost:8080/"><img class ="index-logo" src="\images\logo.png"></a>
+          <label class="date-picker">
+          <input type="date" id="date" class="day form-parts">
+          </label>
 
-          <!-- 出欠入力 -->
+          <!-- 出欠入力 
           <label for = "">
-            出欠<input type="search" autocomplete="on" list="list" id="">
+            出欠<input type="search" autocomplete="on" list="list" id="">-->
   
-            <!-- クラスの候補を表示 -->
+            <!-- クラスの候補を表示 
             <datalist id="list">
               <option value="全員">
               <option value="出席">
@@ -46,42 +54,47 @@
             </datalist>
   
             <input type="submit" value="検索" id="-search">
-            </label>
-        </section>
+            </label>-->
+            <div class="mypiechart">
+              <canvas id="myPieChart" width="200"></canvas>
+            </div>
+          </div>
 
-        <section>
-          <table>
+        <div class="index-right-block">
+          <table class="index-table">
             <thead>
               <tr>
-                <th>クラス</th>
                 <th>姓</th>
                 <th>名</th>
                 <th>体温</th>
                 <th>出欠</th>
                 <th>feeling</th>
-                <th>詳細</th>
+                <th>理由</th>
+                <th>その他の理由</th>
               </tr>
             </thead>
             <tbody id="users-table">
 
             </tbody>
           </table>
-        </section>
-
-        <section>
-          <tbody id=test></tbody>
-
-
-
-        </section>
-
-        <div class="chart-container" style="position: relative; height:500px; width:500px">
-
-          <canvas id="myPieChart">
-          </canvas>
-
-
         </div>
+      </section>
+    </section>
+
+     
+
+        
+
+          
+
+
+          
+          
+          
+          
+
+
+       
 
 
 
