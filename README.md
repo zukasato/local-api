@@ -82,3 +82,7 @@ https://www.dbonline.jp/postgresql/<br>
 
 docker参考<br>
 https://youtu.be/DNnW4I43wyU
+
+node.js herokuへのデプロイ参考<br>
+https://devcenter.heroku.com/ja/articles/deploying-nodejs
+
